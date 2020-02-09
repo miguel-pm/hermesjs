@@ -5,11 +5,9 @@ const dependencies = []
 const REMOVABLE_ELEMENTS = [
   './node_modules',
   './src',
-  './.babelrc',
   './.eslintignore',
   './.eslintrc',
   './package-lock.json',
-  './rollup.config.js',
   './tsconfig.json'
 ]
 
@@ -75,7 +73,7 @@ const treeShaking = () => new Promise((resolve, reject) => {
   console.log(dependencies)
   await installDependencies(dependencies)
   await buildCode()
-  // await treeShaking()
+  await treeShaking()
 }()).catch(err => {
   console.error(err)
   process.exit(1)

@@ -7,10 +7,9 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint src/**/*.ts --quiet",
-    "build:js": "./node_modules/.bin/rollup -c",
-    "build:types": "node_modules/.bin/tsc --emitDeclarationOnly",
+    "build:js": "./node_modules/.bin/tsc",
     "build:pre-clean": "./node_modules/.bin/rimraf ./dist",
-    "build": "npm run build:pre-clean && npm run build:js && npm run build:types",
+    "build": "npm run build:pre-clean && npm run build:js",
     "postinstall": "if [ ! -e .no-postinstall ]; then node ./post_install_script.js; fi"
   },
   "repository": {
@@ -29,25 +28,15 @@
   },
   "homepage": "https://github.com/miguel-pm/hermesjs#readme",
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/preset-typescript": "^7.8.3",
-    "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
     "@types/node": "^13.7.0",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
     "eslint": "^6.8.0",
     "rimraf": "^3.0.2",
-    "rollup": "^1.31.0",
-    "rollup-plugin-babel": "^4.3.3",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.4",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v17.1.0"
   }
 }

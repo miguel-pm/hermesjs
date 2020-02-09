@@ -6,7 +6,6 @@
     "esModuleInterop": true,
     "preserveConstEnums": true,
     "strictNullChecks": true,
-    "sourceMap": false,
     "declaration": true,
     "moduleResolution": "node",
     "target": "es2015",

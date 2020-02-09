@@ -2,6 +2,8 @@ import { App } from 'uWebSockets.js'
 
 import { requestHandler, errorHandler } from './utils'
 import {
+  RouterFunction,
+  RequestMethods,
   HermesError,
   BootstrapFunction,
   BoundRequestHandler,
@@ -41,3 +43,8 @@ const Hermes: BootstrapFunction = (deps, router, app = App(), port = DEFAULT_POR
 
 export default Hermes
 export { genAppError } from './utils'
+
+export {
+  RouterFunction,
+  RequestMethods
+}
