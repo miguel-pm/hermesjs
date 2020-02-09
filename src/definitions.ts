@@ -33,7 +33,7 @@ export interface BoundRequestHandler {
   (res: HttpResponse, req: HttpRequest): Promise<HttpResponse>
 }
 export interface ErrorHandler {
-  (res: HttpResponse, logger: Logger | Console, error: HermesError): HttpResponse
+  (res: HttpResponse, logger: any | Console, error: HermesError): HttpResponse
 }
 export interface BoundErrorHandler {
   (error: HermesError): void
