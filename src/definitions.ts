@@ -4,7 +4,6 @@ import {
   HttpRequest,
   RecognizedString
 } from 'uWebSockets.js'
-import { Logger } from 'winston'
 
 export enum RequestMethods {
   GET = 'GET',
@@ -14,7 +13,7 @@ export enum RequestMethods {
 }
 
 export interface MainDependencies {
-  logger: Logger | Console
+  logger: any | Console
 }
 
 export interface RouterFunction {
