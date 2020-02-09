@@ -42,12 +42,6 @@ const Hermes: BootstrapFunction = (deps, router, app = App(), port = DEFAULT_POR
 export { genAppError } from './utils'
 
 export {
-  RouterFunction,
-  RequestMethods,
-  MainDependencies
-} from './definitions'
-
-export {
   OK_STATUS,
   UNPROCESSABLE_ENTITY_STATUS
 } from './constants/http_status.json'

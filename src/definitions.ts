@@ -17,6 +17,9 @@ export interface MainDependencies {
   logger: Logger | Console
 }
 
+export interface RouterFunction {
+  (deps: MainDependencies, req: RequestData, res: HttpResponse): Promise<HttpResponse>
+}
 export interface GenAppErrorFunction {
   (status: RecognizedString, message: string, error?: Error): HermesError
 }
@@ -29,9 +32,6 @@ export interface RequestHandlerFunction {
 }
 export interface BoundRequestHandler {
   (res: HttpResponse, req: HttpRequest): Promise<HttpResponse>
-}
-export interface RouterFunction {
-  (deps: MainDependencies, req: RequestData, res: HttpResponse): Promise<HttpResponse>
 }
 export interface ErrorHandler {
   (res: HttpResponse, logger: Logger | Console, error: HermesError): HttpResponse
