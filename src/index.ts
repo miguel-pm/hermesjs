@@ -8,8 +8,8 @@ import {
   BoundErrorHandler
 } from './definitions'
 
-import { DEFAULT_PORT } from './constants/server.json'
-import { SERVER_LISTEN_ERROR_MESSAGE } from './constants/messages.json'
+import { DEFAULT_PORT } from './constants/server'
+import { SERVER_LISTEN_ERROR_MESSAGE } from './constants/messages'
 
 /**
  * @function
@@ -39,11 +39,5 @@ const Hermes: BootstrapFunction = (deps, router, app = App(), port = DEFAULT_POR
     })
 }
 
-export { genAppError } from './utils'
-
-export {
-  OK_STATUS,
-  UNPROCESSABLE_ENTITY_STATUS
-} from './constants/http_status.json'
-
 export default Hermes
+export { genAppError } from './utils'

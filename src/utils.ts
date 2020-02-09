@@ -12,9 +12,9 @@ import {
 import {
   SERVER_SIDE_ERROR_STATUS,
   UNPROCESSABLE_ENTITY_STATUS
-} from './constants/http_status.json'
-import { SERVER_SIDE_ERROR_MESSAGE } from './constants/messages.json'
-import { METHODS_WITH_BODY, VALID_HTTP_METHODS } from './constants/server.json'
+} from './constants/http_status'
+import { SERVER_SIDE_ERROR_MESSAGE } from './constants/messages'
+import { METHODS_WITH_BODY, VALID_HTTP_METHODS } from './constants/server'
 
 /**
  * @function
