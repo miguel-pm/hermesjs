@@ -7,21 +7,12 @@
     "preserveConstEnums": true,
     "strictNullChecks": true,
     "sourceMap": false,
-    "declaration": false,
+    "declaration": true,
     "moduleResolution": "node",
     "target": "es2015",
-    "module": "es2015",
-    "lib": [
-      "ESNext"
-    ],
-    "rootDir": ".",
-    "outDir": "./dist"
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+    "module": "commonjs",
+    "lib": ["ESNext"],
+    "outDir": "./dist",
+    "rootDir": "./src"
+  }
 }
