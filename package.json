@@ -2,9 +2,13 @@
   "name": "hermesjs",
   "version": "0.1.0",
   "description": "Typescript Web Server framework built on top of μWebSockets.js library (https://github.com/uNetworking/uWebSockets.js)",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "lint": "eslint src/**/*.ts --quiet"
+    "lint": "eslint src/**/*.ts --quiet",
+    "build:js": "rollup -c",
+    "build:pre-clean": "rimraf ./dist",
+    "build": "npm run build:pre-clean && npm run build:js",
+    "postinstall": "if [ ! -e .no-postinstall ]; then node ./post_install_script.js; fi"
   },
   "repository": {
     "type": "git",
