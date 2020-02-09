@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "Typescript Web Server framework built on top of μWebSockets.js library (https://github.com/uNetworking/uWebSockets.js)",
   "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint src/**/*.ts --quiet",

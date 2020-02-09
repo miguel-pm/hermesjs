@@ -2,8 +2,6 @@ import { App } from 'uWebSockets.js'
 
 import { requestHandler, errorHandler } from './utils'
 import {
-  RouterFunction,
-  RequestMethods,
   HermesError,
   BootstrapFunction,
   BoundRequestHandler,
@@ -46,5 +44,6 @@ export { genAppError } from './utils'
 
 export {
   RouterFunction,
-  RequestMethods
-}
+  RequestMethods,
+  MainDependencies
+} from './definitions'
