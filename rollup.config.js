@@ -1,5 +1,6 @@
 import babel from 'rollup-plugin-babel'
 import dts from 'rollup-plugin-dts'
+import json from '@rollup/plugin-json'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 
@@ -7,7 +8,7 @@ export default [
   {
     input: './src/index.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
-    plugins: [dts()]
+    plugins: [json(), dts()]
   },
   {
     input: './src/index.ts',
@@ -23,6 +24,7 @@ export default [
     ],
     external: ['mongoose'],
     plugins: [
+      json(),
       resolve({ extensions: ['.js', '.ts'], preferBuiltins: true }),
       commonjs(),
       babel({
