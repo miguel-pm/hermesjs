@@ -1,0 +1,6 @@
+{
+  "INVALID_ROUTE_MESSAGE": "The requested route is not available",
+  "MALFORMED_QUERY_PARAMS_MESSAGE": "Query params are not format appropriately",
+  "SERVER_LISTEN_ERROR_MESSAGE": "Initialisation of server failed",
+  "SERVER_SIDE_ERROR_MESSAGE": "Unhandled Server Error"
+}
