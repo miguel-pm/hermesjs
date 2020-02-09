@@ -93,7 +93,7 @@ export const parseQueryParams = (req: HttpRequest) => {
  * @param req - uWebSockets HttpRequest object
  */
 export const parseMethod = (req: HttpRequest): RequestMethods | null => {
-  const rawMethod = req.getMethod().toUpperCase()
+  const rawMethod = req.getMethod().toUpperCase() as RequestMethods
   if (!rawMethod || !VALID_HTTP_METHODS.includes(rawMethod)) return null
   return RequestMethods[rawMethod]
 }

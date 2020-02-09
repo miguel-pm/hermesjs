@@ -37,7 +37,7 @@ export interface ErrorHandler {
   (res: HttpResponse, logger: Logger | Console, error: HermesError): HttpResponse
 }
 export interface BoundErrorHandler {
-  (error: HermesError)
+  (error: HermesError): void
 }
 
 export interface RequestBody {

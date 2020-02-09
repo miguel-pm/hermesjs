@@ -22,10 +22,10 @@ export default [
         file: './dist/index.es.js'
       }
     ],
-    external: ['mongoose'],
+    external: ['uWebSockets.js'],
     plugins: [
       json(),
-      resolve({ extensions: ['.js', '.ts'], preferBuiltins: true }),
+      resolve({ extensions: ['.js', '.ts'] }),
       commonjs(),
       babel({
         runtimeHelpers: true,
