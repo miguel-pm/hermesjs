@@ -2,17 +2,16 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "preserveConstEnums": true,
     "strictNullChecks": true,
     "sourceMap": true,
     "declaration": true,
     "declarationDir": "./dist",
-    "target": "es6",
+    "target": "es5",
     "moduleResolution": "node",
-    "lib": [
-      "es2015"
-    ],
+    "lib": ["ESNext"],
     "rootDir": "./"
   }
 }
