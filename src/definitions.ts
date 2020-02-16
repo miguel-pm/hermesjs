@@ -16,15 +16,21 @@ export interface MainDependencies {
   logger: any | Console
 }
 
-export interface RouterFunction {
-  (deps: MainDependencies, req: RequestData, res: HttpResponse): Promise<HttpResponse>
+export interface RouterResponse {
+  status: number,
+  message: string,
+  responseType?: 'json' | 'text'
 }
+export interface RouterFunction {
+  (deps: MainDependencies, req: RequestData): Promise<RouterResponse>
+}
+
 export interface GenAppErrorFunction {
   (status: RecognizedString, message: string, error?: Error): HermesError
 }
 
 export interface BootstrapFunction {
-  (deps: MainDependencies, router: RouterFunction, app?: TemplatedApp, port?: number): void
+  (deps: MainDependencies, router: RouterFunction, port?: number, app?: TemplatedApp): void
 }
 export interface RequestHandlerFunction {
   (deps: MainDependencies, router: RouterFunction, res: HttpResponse, req: HttpRequest): Promise<HttpResponse>

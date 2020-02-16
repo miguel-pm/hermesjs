@@ -18,10 +18,10 @@ import { SERVER_LISTEN_ERROR_MESSAGE } from './constants/messages'
  * A specific uWebSockets TemplatedApp object and port number might be specified.
  * @param deps - Set of injected dependencies. Only mandatory one is a logging object (might be Node's console object)
  * @param router - A user defined function to handle routes and logic
- * @param [app] - (Optional) uWebSockets TemplatedApp object
  * @param [port] - (Optional) Port number to have the server connect at
+ * @param [app] - (Optional) uWebSockets TemplatedApp object
  */
-const Hermes: BootstrapFunction = (deps, router, app = App(), port = DEFAULT_PORT) => {
+const Hermes: BootstrapFunction = (deps, router, port = DEFAULT_PORT, app = App()) => {
   const { logger } = deps
   const reqHandler: BoundRequestHandler = requestHandler.bind(null, deps, router)
   app
