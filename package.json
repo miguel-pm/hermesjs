@@ -1,6 +1,6 @@
 {
   "name": "hermesjs",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Typescript Web Server framework built on top of μWebSockets.js library (https://github.com/uNetworking/uWebSockets.js)",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
