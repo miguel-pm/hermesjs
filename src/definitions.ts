@@ -18,7 +18,7 @@ export interface MainDependencies {
 
 export interface RouterResponse {
   status: number,
-  message: string,
+  message?: string,
   responseType?: 'json' | 'text'
 }
 export interface RouterFunction {

@@ -155,7 +155,7 @@ export const requestHandler: RequestHandlerFunction = async (deps, router, res, 
     .catch(error => {
       throw genAppError(SERVER_SIDE_ERROR_STATUS, SERVER_SIDE_ERROR_MESSAGE, error)
     })
-  const { status, message, responseType = 'json' } = result
+  const { status, message = '', responseType = 'json' } = result
 
   switch (responseType) {
     default: // JSON
