@@ -6,7 +6,8 @@ import {
   RequestData,
   RequestHandlerFunction,
   ErrorHandler,
-  GenAppErrorFunction
+  GenAppErrorFunction,
+  RouterResponse
 } from './definitions'
 
 import {
@@ -151,10 +152,13 @@ export const requestHandler: RequestHandlerFunction = async (deps, router, res, 
     body,
     headers
   }
-  const result = await router(deps, reqData)
-    .catch(error => {
-      throw genAppError(SERVER_SIDE_ERROR_STATUS, SERVER_SIDE_ERROR_MESSAGE, error)
-    })
+
+  let result: RouterResponse | null = null
+  try {
+    result = await router(deps, reqData)
+  } catch (error) {
+    throw genAppError(SERVER_SIDE_ERROR_STATUS, SERVER_SIDE_ERROR_MESSAGE, error)
+  }
   const { status, message = '', responseType = 'json' } = result
 
   switch (responseType) {

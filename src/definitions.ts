@@ -22,7 +22,7 @@ export interface RouterResponse {
   responseType?: 'json' | 'text'
 }
 export interface RouterFunction {
-  (deps: MainDependencies, req: RequestData): Promise<RouterResponse>
+  (deps: MainDependencies, req: RequestData): Promise<RouterResponse> | RouterResponse
 }
 
 export interface GenAppErrorFunction {
