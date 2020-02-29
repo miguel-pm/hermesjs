@@ -160,11 +160,13 @@ export const requestHandler: RequestHandlerFunction = async (deps, router, res, 
     throw genAppError(SERVER_SIDE_ERROR_STATUS, SERVER_SIDE_ERROR_MESSAGE, error)
   }
   const { status, message = '', responseType = 'json' } = result
-
+  // Write the status to the response
+  res.writeStatus(`${status}`)
+  // Write Headers to the response
   switch (responseType) {
     default: // JSON
       res.writeHeader('Content-Type', 'application/json')
   }
-  // uWebSockets expects the status as a RecognizedString
-  return res.writeStatus(`${status}`).end(message)
+  // Send response
+  return res.end(message)
 }
