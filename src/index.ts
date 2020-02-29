@@ -44,6 +44,8 @@ export { genAppError } from './utils'
 
 export {
   RouterFunction,
+  RouterResponse,
   RequestMethods,
+  RequestData,
   MainDependencies
 } from './definitions'
