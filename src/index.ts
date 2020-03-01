@@ -46,6 +46,7 @@ export {
   RouterFunction,
   RouterResponse,
   RequestMethods,
+  RequestBody,
   RequestData,
   MainDependencies
 } from './definitions'
