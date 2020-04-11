@@ -1,6 +1,6 @@
 {
   "name": "@miguel-pm/hermes.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Typescript Web Server framework built on top of μWebSockets.js library (https://github.com/uNetworking/uWebSockets.js)",
   "main": "./dist/hermes.js",
   "types": "./dist/hermes.d.ts",
@@ -9,7 +9,8 @@
     "lint": "eslint src/**/*.ts --quiet",
     "build:transpile-ts": "./node_modules/.bin/rollup -c",
     "prebuild": "./node_modules/.bin/rimraf ./dist",
-    "build": "npm run lint && npm run build:transpile-ts"
+    "build": "npm run lint && npm run build:transpile-ts",
+    "prepublish": "npm run build"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
