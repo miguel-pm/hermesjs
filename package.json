@@ -1,5 +1,5 @@
 {
-  "name": "@miguelpm/hermes.js",
+  "name": "@miguel-pm/hermes.js",
   "version": "1.0.0",
   "description": "Typescript Web Server framework built on top of μWebSockets.js library (https://github.com/uNetworking/uWebSockets.js)",
   "main": "./dist/hermes.js",
