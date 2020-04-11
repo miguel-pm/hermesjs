@@ -8,8 +8,7 @@
     "lint": "eslint src/**/*.ts --quiet",
     "build:js": "./node_modules/.bin/tsc",
     "build:pre-clean": "./node_modules/.bin/rimraf ./dist",
-    "build": "npm run build:pre-clean && npm run build:js",
-    "postinstall": "if [ ! -e .no-postinstall ]; then node ./post_install_script.js; fi"
+    "build": "npm run build:pre-clean && npm run build:js"
   },
   "repository": {
     "type": "git",
