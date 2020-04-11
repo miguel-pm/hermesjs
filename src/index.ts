@@ -41,12 +41,3 @@ const Hermes: BootstrapFunction = (deps, router, port = DEFAULT_PORT, app = App(
 
 export default Hermes
 export { genAppError } from './utils'
-
-export {
-  RouterFunction,
-  RouterResponse,
-  RequestMethods,
-  RequestBody,
-  RequestData,
-  MainDependencies
-} from './definitions'
