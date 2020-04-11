@@ -8,17 +8,16 @@ import {
   ErrorHandler,
   GenAppErrorFunction,
   RouterResponse
-} from './definitions'
+} from './hermes.types'
 
 import {
   SERVER_SIDE_ERROR_STATUS,
   UNPROCESSABLE_ENTITY_STATUS
-} from './constants/http_status'
-import { SERVER_SIDE_ERROR_MESSAGE } from './constants/messages'
-import { METHODS_WITH_BODY, VALID_HTTP_METHODS } from './constants/server'
+} from '../constants/constants.http_status'
+import { SERVER_SIDE_ERROR_MESSAGE } from '../constants/constants.messages'
+import { METHODS_WITH_BODY, VALID_HTTP_METHODS } from '../constants/constants.server'
 
 /**
- * @function
  * @description Given a status and a message formats a new object of the type HermesError. An actual error object might
  * be passed to get the precise stack trace in the error printed.
  * @param status - A strigified number representing an HTTP status code
@@ -29,7 +28,6 @@ export const genAppError: GenAppErrorFunction = (status, message, error = new Er
   ({ status, message, error })
 
 /**
- * @function
  * @description Function that given the HttpResponse object from uWebSockets, the desired logger and an error in the
  * HermesError format prints it on the screen and responds to the client whith the message simple message from the error.
  * @param res - uWebSockets Response object
@@ -44,8 +42,6 @@ export const errorHandler: ErrorHandler = (res, logger, err) => {
 }
 
 /**
- * @async
- * @function
  * @description Body Parser for the Hermes.js Framework. Given the uWebSockets HttpResponse object serializes
  * the buffer and returns a formatted RequestBody object.
  * @param res - uWebSockets HttpResponse object
@@ -69,7 +65,6 @@ export const parseBody = (res: HttpResponse): Promise<RequestBody> => new Promis
 })
 
 /**
- * @function
  * @description Receives the uWebSockets HttpRequest object and parses any possible query parameters
  * into an object.
  * @param req - uWebSockets HttpRequest object
@@ -88,7 +83,6 @@ export const parseQueryParams = (req: HttpRequest) => {
 }
 
 /**
- * @function
  * @description Receives the uWebSockets HttpRequest object and formats the request method into an instance of
  * the RequestMethods enum or returns null if the obtained method is not included in the enum.
  * @param req - uWebSockets HttpRequest object
@@ -100,8 +94,6 @@ export const parseMethod = (req: HttpRequest): RequestMethods | null => {
 }
 
 /**
- * @async
- * @function
  * @description Main Request handler of the Hermes.js framework. With a set of injected dependencies, a router function
  * and the HttpResponse and HttpRequest objects from uWebSockets, formats all the data from the request and calls the
  * given router function with it.
