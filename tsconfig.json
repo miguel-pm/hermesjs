@@ -1,17 +1,30 @@
 {
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
   "compilerOptions": {
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "target": "ES6",
+    "module": "commonjs",
+    "lib": [
+      "ESNext"
+    ],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
     "esModuleInterop": true,
     "preserveConstEnums": true,
-    "strictNullChecks": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "target": "es2015",
-    "module": "commonjs",
-    "lib": ["ESNext"],
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true
   }
 }
