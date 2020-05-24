@@ -1,15 +1,17 @@
-import { App } from 'uWebSockets.js'
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/promise-function-async */
+import { App } from 'uWebSockets.js';
 
 import {
   BootstrapFunction,
   BoundRequestHandler,
   BoundErrorHandler,
   HermesError
-} from './hermes.types'
-import { requestHandler, errorHandler } from './hermes.utils'
+} from './hermes.types';
+import { requestHandler, errorHandler } from './hermes.utils';
 
-import { DEFAULT_PORT } from '../constants/constants.server'
-import { SERVER_LISTEN_ERROR_MESSAGE } from '../constants/constants.messages'
+import { DEFAULT_PORT } from '../constants/constants.server';
+import { SERVER_LISTEN_ERROR_MESSAGE } from '../constants/constants.messages';
 
 /**
  * @function
@@ -22,19 +24,19 @@ import { SERVER_LISTEN_ERROR_MESSAGE } from '../constants/constants.messages'
  * @param [app] - (Optional) uWebSockets TemplatedApp object
  */
 export const hermes: BootstrapFunction = (deps, router, port = DEFAULT_PORT, app = App()) => {
-  const { logger } = deps
-  const reqHandler: BoundRequestHandler = requestHandler.bind(null, deps, router)
+  const { logger } = deps;
+  const reqHandler: BoundRequestHandler = requestHandler.bind(null, deps, router);
   app
     .any('/*', (res, req) => {
-      const errHandler: BoundErrorHandler = errorHandler.bind(null, res, logger)
+      const errHandler: BoundErrorHandler = errorHandler.bind(null, res, logger);
       return reqHandler(res, req)
         .catch((error: Error | HermesError) => {
-          if (error instanceof Error) error = { error } as HermesError
-          return errHandler(error)
-        })
+          if (error instanceof Error) error = { error } as HermesError;
+          return errHandler(error);
+        });
     })
     .listen(port, listenSocket => {
-      if (listenSocket) logger.info(`Listening on port ${port}`)
-      else throw new Error(SERVER_LISTEN_ERROR_MESSAGE)
-    })
-}
+      if (listenSocket) logger.info(`Listening on port ${port}`);
+      else throw new Error(SERVER_LISTEN_ERROR_MESSAGE);
+    });
+};

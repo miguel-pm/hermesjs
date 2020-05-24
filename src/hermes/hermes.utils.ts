@@ -1,4 +1,4 @@
-import { HttpResponse, HttpRequest } from 'uWebSockets.js'
+import { HttpResponse, HttpRequest } from 'uWebSockets.js';
 
 import {
   RequestBody,
@@ -8,14 +8,14 @@ import {
   ErrorHandler,
   GenAppErrorFunction,
   RouterResponse
-} from './hermes.types'
+} from './hermes.types';
 
 import {
   SERVER_SIDE_ERROR_STATUS,
   UNPROCESSABLE_ENTITY_STATUS
-} from '../constants/constants.http_status'
-import { SERVER_SIDE_ERROR_MESSAGE } from '../constants/constants.messages'
-import { METHODS_WITH_BODY, VALID_HTTP_METHODS } from '../constants/constants.server'
+} from '../constants/constants.http_status';
+import { SERVER_SIDE_ERROR_MESSAGE } from '../constants/constants.messages';
+import { METHODS_WITH_BODY, VALID_HTTP_METHODS } from '../constants/constants.server';
 
 /**
  * @description Given a status and a message formats a new object of the type HermesError. An actual error object might
@@ -25,7 +25,7 @@ import { METHODS_WITH_BODY, VALID_HTTP_METHODS } from '../constants/constants.se
  * @param error - An optional error object
  */
 export const genAppError: GenAppErrorFunction = (status, message, error = new Error(message)) =>
-  ({ status, message, error })
+  ({ status, message, error });
 
 /**
  * @description Function that given the HttpResponse object from uWebSockets, the desired logger and an error in the
@@ -35,11 +35,11 @@ export const genAppError: GenAppErrorFunction = (status, message, error = new Er
  * @param err - Error object in the format HermesError
  */
 export const errorHandler: ErrorHandler = (res, logger, err) => {
-  const { status = SERVER_SIDE_ERROR_STATUS, message = SERVER_SIDE_ERROR_MESSAGE, error } = err
-  const stack = error && error.hasOwnProperty('stack') ? error.stack : undefined
-  logger.error(`Hermes catched Error. Status: ${status}. Message: ${message}. Stack: ${stack}`)
-  return res.writeStatus(status).end(message)
-}
+  const { status = SERVER_SIDE_ERROR_STATUS, message = SERVER_SIDE_ERROR_MESSAGE, error } = err;
+  const stack = error?.hasOwnProperty('stack') ? error.stack : undefined;
+  logger.error(`Hermes catched Error. Status: ${status}. Message: ${message}. Stack: ${stack}`);
+  return res.writeStatus(status).end(message);
+};
 
 /**
  * @description Body Parser for the Hermes.js Framework. Given the uWebSockets HttpResponse object serializes
@@ -47,22 +47,22 @@ export const errorHandler: ErrorHandler = (res, logger, err) => {
  * @param res - uWebSockets HttpResponse object
  */
 export const parseBody = (res: HttpResponse): Promise<RequestBody> => new Promise((resolve, reject) => {
-  let buff: Buffer
+  let buff: Buffer;
   res.onData((ab, isLast) => {
-    const chunk: Buffer = Buffer.from(ab)
+    const chunk: Buffer = Buffer.from(ab);
     if (isLast) {
-      let json: RequestBody
+      let json: RequestBody;
       try {
-        json = JSON.parse((Boolean(buff) ? Buffer.concat([buff, chunk]) : chunk).toString())
+        json = JSON.parse((buff ? Buffer.concat([buff, chunk]) : chunk).toString());
       } catch (e) {
-        return reject(e)
+        return reject(e);
       }
-      resolve(json)
+      resolve(json);
     } else {
-      buff = Buffer.concat(Boolean(buff) ? [buff, chunk] : [chunk])
+      buff = Buffer.concat(buff ? [buff, chunk] : [chunk]);
     }
-  })
-})
+  });
+});
 
 /**
  * @description Receives the uWebSockets HttpRequest object and parses any possible query parameters
@@ -70,17 +70,17 @@ export const parseBody = (res: HttpResponse): Promise<RequestBody> => new Promis
  * @param req - uWebSockets HttpRequest object
  */
 export const parseQueryParams = (req: HttpRequest) => {
-  const rawQueryParams = req.getQuery()
-  const params: { [key: string]: string } = {}
-  if (!rawQueryParams || !rawQueryParams.length) return params
+  const rawQueryParams = req.getQuery();
+  const params: { [key: string]: string } = {};
+  if (!rawQueryParams || !rawQueryParams.length) return params;
 
   for (const rawParam of rawQueryParams.split('&')) {
-    const [pKey, pValue] = rawParam.split('=')
-    const decodedPValue: string = decodeURIComponent(pValue)
-    params[pKey] = decodedPValue
+    const [pKey, pValue] = rawParam.split('=');
+    const decodedPValue: string = decodeURIComponent(pValue);
+    params[pKey] = decodedPValue;
   }
-  return params
-}
+  return params;
+};
 
 /**
  * @description Receives the uWebSockets HttpRequest object and formats the request method into an instance of
@@ -88,10 +88,10 @@ export const parseQueryParams = (req: HttpRequest) => {
  * @param req - uWebSockets HttpRequest object
  */
 export const parseMethod = (req: HttpRequest): RequestMethods | null => {
-  const rawMethod = req.getMethod().toUpperCase() as RequestMethods
-  if (!rawMethod || !VALID_HTTP_METHODS.includes(rawMethod)) return null
-  return RequestMethods[rawMethod]
-}
+  const rawMethod = req.getMethod().toUpperCase() as RequestMethods;
+  if (!rawMethod || !VALID_HTTP_METHODS.includes(rawMethod)) return null;
+  return RequestMethods[rawMethod];
+};
 
 /**
  * @description Main Request handler of the Hermes.js framework. With a set of injected dependencies, a router function
@@ -103,39 +103,39 @@ export const parseMethod = (req: HttpRequest): RequestMethods | null => {
  * @param req - uWebSockets HttpRequest object
  */
 export const requestHandler: RequestHandlerFunction = async (deps, router, res, req) => {
-  const { logger } = deps
+  const { logger } = deps;
   // In case the response process is aborted or closed this handler is called
-  res.onAborted(() => { res.writeStatus(SERVER_SIDE_ERROR_STATUS).end(SERVER_SIDE_ERROR_MESSAGE) })
+  res.onAborted(() => { res.writeStatus(SERVER_SIDE_ERROR_STATUS).end(SERVER_SIDE_ERROR_MESSAGE); });
 
-  const method = parseMethod(req)
+  const method = parseMethod(req);
   if (method === null) {
-    const errMessage = 'Invalid HTTP Method'
-    const error = new Error(errMessage)
-    throw genAppError(UNPROCESSABLE_ENTITY_STATUS, errMessage, error)
+    const errMessage = 'Invalid HTTP Method';
+    const error = new Error(errMessage);
+    throw genAppError(UNPROCESSABLE_ENTITY_STATUS, errMessage, error);
   }
 
-  const route = req.getUrl()
-  const queryParams = parseQueryParams(req)
+  const route = req.getUrl();
+  const queryParams = parseQueryParams(req);
 
   logger.debug('Received incoming request:\n' +
     `Method => ${method};\n` +
     `Route => ${route}\n` +
     `Query Params => ${Object.keys(queryParams).reduce((acc, key) =>
       `${acc}${acc.length ? ';\n' : ''}${key} = ${queryParams[key]}`
-      , '')}`)
+      , '')}`);
 
-  const headers: Map<string, string> = new Map()
-  logger.debug('Request Headers:')
+  const headers: Map<string, string> = new Map();
+  logger.debug('Request Headers:');
   req.forEach((key, value) => {
-    logger.debug(`${key} => ${value}`)
-    headers.set(key, value)
-  })
+    logger.debug(`${key} => ${value}`);
+    headers.set(key, value);
+  });
 
-  let body: { [key: string]: any } = {}
+  let body: { [key: string]: any } = {};
   if (METHODS_WITH_BODY.includes(method)) {
     body = await parseBody(res).catch(error => {
-      throw genAppError(SERVER_SIDE_ERROR_STATUS, SERVER_SIDE_ERROR_MESSAGE, error)
-    })
+      throw genAppError(SERVER_SIDE_ERROR_STATUS, SERVER_SIDE_ERROR_MESSAGE, error);
+    });
   }
   const reqData: RequestData = {
     method,
@@ -143,22 +143,22 @@ export const requestHandler: RequestHandlerFunction = async (deps, router, res, 
     queryParams,
     body,
     headers
-  }
+  };
 
-  let result: RouterResponse | null = null
+  let result: RouterResponse | null = null;
   try {
-    result = await router(deps, reqData)
+    result = await router(deps, reqData);
   } catch (error) {
-    throw genAppError(SERVER_SIDE_ERROR_STATUS, SERVER_SIDE_ERROR_MESSAGE, error)
+    throw genAppError(SERVER_SIDE_ERROR_STATUS, SERVER_SIDE_ERROR_MESSAGE, error);
   }
-  const { status, message = '', responseType = 'json' } = result
+  const { status, message = '', responseType = 'json' } = result;
   // Write the status to the response
-  res.writeStatus(`${status}`)
+  res.writeStatus(`${status}`);
   // Write Headers to the response
   switch (responseType) {
     default: // JSON
-      res.writeHeader('Content-Type', 'application/json')
+      res.writeHeader('Content-Type', 'application/json');
   }
   // Send response
-  return res.end(message)
-}
+  return res.end(message);
+};
