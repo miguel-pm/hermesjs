@@ -6,6 +6,7 @@
   "types": "./dist/hermes.d.ts",
   "module": "./dist/hermes.es.js",
   "scripts": {
+    "test": "NODE_ENV=test mocha ./src/**/*.spec.ts",
     "lint": "eslint src/**/*.ts --quiet",
     "build:transpile-ts": "./node_modules/.bin/rollup -c",
     "prebuild": "./node_modules/.bin/rimraf ./dist",
