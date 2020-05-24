@@ -42,6 +42,12 @@
         "tabWidth": 2,
         "ignoreRegExpLiterals": true
       }
-    ]
+    ],
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/strict-boolean-expressions": 1,
+    "@typescript-eslint/return-await": 0,
+    "@typescript-eslint/array-type": 0,
+    "@typescript-eslint/consistent-type-assertions": 1,
+    "@typescript-eslint/promise-function-async": 0
   }
 }

@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/miguel-pm/hermesjs#readme",
   "dependencies": {
+    "fp-ts": "^2.6.1",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v17.1.0"
   },
   "devDependencies": {

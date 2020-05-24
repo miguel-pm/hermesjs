@@ -18,13 +18,6 @@ export const SERVER_SIDE_ERROR_MESSAGE = 'Unhandled Server Error';
 
 /* -- Hermes Functionality -- */
 export const DEFAULT_PORT = 7878;
-export const VALID_HTTP_METHODS = [
-  'GET',
-  'POST',
-  'PUT',
-  'PATCH',
-  'DELETE'
-];
 export const METHODS_WITH_BODY = [
   'POST',
   'PUT',
