@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 module.exports = {
   extension: ['spec.ts'],
   require: 'node_modules/ts-node/register',
