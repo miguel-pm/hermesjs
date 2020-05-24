@@ -9,14 +9,30 @@ import {
   BodyParserFunction,
   QueryParamsParserFunction,
   QueryParams,
-  MethodParserFunction
+  MethodParserFunction,
+  HeaderParserFunction,
+  Headers,
+  ErrorHandlerFunction
 } from './hermes.types';
+import {
+  SERVER_SIDE_ERROR_STATUS,
+  SERVER_SIDE_ERROR_MESSAGE
+} from './hermes.constants';
 
 /**
  * @description Get string as a valid RequestMethods value
  * @param value - The previously validate string to consider a RequestMethod entry
  */
 export const getStringAsRequestMethod = (value: string): RequestMethods => value as RequestMethods;
+
+/**
+ * @description Returns a key value pair storage as a semicolon and newline separated string
+ * @param object - Key value pair to be stringified
+ */
+export const stringifyKeyValuePair = (object: { [key: string]: string | number | null }): string =>
+  Object.keys(object).reduce((acc, k) =>
+    `${acc}${acc.length > 0 ? ';\n' : ''}${k} = ${String(object[k])}`
+  , '');
 
 /**
  * @description Given a status and a message formats a new object of the type HermesError. An actual error object might
@@ -27,6 +43,20 @@ export const getStringAsRequestMethod = (value: string): RequestMethods => value
  */
 export const genHermesError: GenHermesErrorFunction = (status, message, error = new Error(message)) =>
   ({ status, message, error });
+
+/**
+ * @description Function that given the HttpResponse object from uWebSockets, the desired logger and an error in the
+ * HermesError format prints it on the screen and responds to the client whith the message simple message from the error.
+ * @param res - uWebSockets Response object
+ * @param logger - A Logger object to use to print the error in the stdout
+ * @param err - Error object in the format HermesError
+ */
+export const errorHandler: ErrorHandlerFunction = (res, logger, err) => {
+  const { status = SERVER_SIDE_ERROR_STATUS, message = SERVER_SIDE_ERROR_MESSAGE, error } = err;
+  const stack = isValidString(error?.stack) ? error!.stack : undefined;
+  logger.error(`Hermes catched Error. Status: ${String(status)}. Message: ${message}. Stack: ${String(stack)}`);
+  res.writeStatus(status).end(message);
+};
 
 /**
  * @description Body Parser for the Hermes.js Framework. Given the uWebSockets HttpResponse object serializes
@@ -83,4 +113,14 @@ export const parseMethod: MethodParserFunction = req => {
     !Object.keys(RequestMethods).includes(rawMethod)) return none;
   // We know more than the compiler in this instance
   return some(RequestMethods[getStringAsRequestMethod(rawMethod)]);
+};
+
+/**
+ * @description Given the request object stores the headers in an object and returns it
+ * @param req - uWebSockets HttpRequest object
+ */
+export const parseHeaders: HeaderParserFunction = req => {
+  const headers: Headers = {};
+  req.forEach((key, value) => { headers[key] = value; });
+  return headers;
 };
