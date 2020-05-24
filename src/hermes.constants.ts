@@ -17,7 +17,7 @@ export const SERVER_LISTEN_ERROR_MESSAGE = 'Initialisation of server failed';
 export const SERVER_SIDE_ERROR_MESSAGE = 'Unhandled Server Error';
 
 /* -- Hermes Functionality -- */
-export const DEFAULT_PORT = 3000;
+export const DEFAULT_PORT = 7878;
 export const VALID_HTTP_METHODS = [
   'GET',
   'POST',
