@@ -1,10 +1,10 @@
-import dts from 'rollup-plugin-dts'
-import babel from 'rollup-plugin-babel'
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
+import dts from 'rollup-plugin-dts';
+import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
 
-const INPUT = './src/index.ts'
-const LIBRARY_NAME = 'hermes'
+const INPUT = './src/index.ts';
+const LIBRARY_NAME = 'hermes';
 
 export default [
   {
@@ -24,7 +24,7 @@ export default [
         file: `./dist/${LIBRARY_NAME}.es.js`
       }
     ],
-    external: ['uWebSockets.js'],
+    external: ['uWebSockets.js', 'fp-ts/lib/Option', 'fp-ts/lib/Either'],
     plugins: [
       resolve({
         jsnext: true,
@@ -37,4 +37,4 @@ export default [
       })
     ]
   }
-]
+];
