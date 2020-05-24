@@ -6,12 +6,12 @@ A small and lightweight http/https library that allows for the use of the blazin
 ```npm install @miguel-pm/hermes.js```
 
 #### Usage
-This library exposes a function that expects a set of arguments:
+This library exposes a function that expects a router function and has some options:
 
-- deps: A dependencies object to inject into the functionality.
-- router: A router function which will be called to handle the routes that the server will receive. Defined by the `RouterFunction` interface will receive the dependencies object previously injected and a `RequestData` object. The return value has to be of the type `RouterResponse`
+- router: A router function which will be called to handle the routes that the server will receive. Defined by the `RouterFunction` interface will receive the dependencies object and a `RequestData` object. The return value has to be of the type `RouterResponse` ({ status: number, message?: string, responseType?: 'json' | 'text' })
+- deps (optional, default => { logger: console }): A dependencies object to inject into the provided router function.
 - port (optional, default => 3000).
-- app: (optional, default => μWebSockets.js' TemplatedApp Http object): Will accept variations from the same library like the `SSLApp` function TemplatedApp response
+- app (optional, default => μWebSockets.js' TemplatedApp Http object): Will accept variations from the same library like the `SSLApp` function TemplatedApp response
 
 #### Example
 
@@ -19,6 +19,7 @@ This library exposes a function that expects a set of arguments:
 import hermes, { RouterFunction } from '@miguel-pm/hermes.js'
 
 const routerFunction: RouterFunction = (deps, reqData) => {
+  // If nothing is provided defaults to console
   const { logger } = deps
 
   const {
@@ -30,11 +31,11 @@ const routerFunction: RouterFunction = (deps, reqData) => {
   } = reqData
 
   logger.info('Request received!')
-  if (route === 'helo_world') {
+  if (route === 'helo_world' && method === 'GET') {
     return {
       status: 200,
       message: 'Hello, World!', // Optional
-      responseType: 'json' // Optional, No more types supported for now
+      responseType: 'json' // Optional
     }
   }
 
