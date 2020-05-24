@@ -6,11 +6,11 @@
   "types": "./dist/hermes.d.ts",
   "module": "./dist/hermes.es.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha ./src/**/*.spec.ts",
+    "test": "NODE_ENV=test mocha ./src/test/*.spec.ts",
+    "cover": "./node_modules/.bin/nyc npm t",
     "lint": "eslint src/**/*.ts --quiet",
-    "build:transpile-ts": "./node_modules/.bin/rollup -c",
-    "prebuild": "./node_modules/.bin/rimraf ./dist",
-    "build": "npm run lint && npm run build:transpile-ts",
+    "prebuild": "./node_modules/.bin/rimraf ./dist && npm run lint && npm run cover",
+    "build": "./node_modules/.bin/rollup -c",
     "prepublish": "npm run build"
   },
   "publishConfig": {

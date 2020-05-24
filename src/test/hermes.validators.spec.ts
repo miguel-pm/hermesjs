@@ -7,7 +7,7 @@ import {
   isValidNumber,
   isValidArray,
   isNonzeroUnsignedNum
-} from './hermes.validators';
+} from '../hermes.validators';
 
 describe('Common Validators Module', () => {
   describe('isValid function', () => {

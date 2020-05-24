@@ -3,3 +3,4 @@ node_modules/
 
 .mocharc.js
 rollup.config.js
+nyc.config.js

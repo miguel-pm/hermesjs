@@ -31,7 +31,7 @@ export const getStringAsRequestMethod = (value: string): RequestMethods => value
  */
 export const stringifyKeyValuePair = (object: { [key: string]: string | number | null }): string =>
   Object.keys(object).reduce((acc, k) =>
-    `${acc}${acc.length > 0 ? ';\n' : ''}${k} = ${String(object[k])}`
+    `${acc}${acc.length > 0 ? '\n' : ''}${k} = ${String(object[k])};`
   , '');
 
 /**
@@ -53,7 +53,7 @@ export const genHermesError: GenHermesErrorFunction = (status, message, error = 
  */
 export const errorHandler: ErrorHandlerFunction = (res, logger, err) => {
   const { status = SERVER_SIDE_ERROR_STATUS, message = SERVER_SIDE_ERROR_MESSAGE, error } = err;
-  const stack = isValidString(error?.stack) ? error!.stack : undefined;
+  const stack = error?.stack;
   logger.error(`Hermes catched Error. Status: ${String(status)}. Message: ${message}. Stack: ${String(stack)}`);
   res.writeStatus(status).end(message);
 };
