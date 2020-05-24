@@ -1,5 +1,9 @@
-import { hermes } from './hermes/hermes.main';
-import { genAppError } from './hermes/hermes.utils';
+import { hermes } from './hermes.main';
+import * as hermesTypes from './hermes.types';
 
 export default hermes;
-export { genAppError };
+
+export type RouterFunction = hermesTypes.RouterFunction;
+
+export type RequestBody = hermesTypes.RequestBody;
+export type RequestResponse = hermesTypes.RequestResponse;
