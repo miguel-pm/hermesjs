@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { isNone } from 'fp-ts/lib/Option';
 import { left, right, isLeft } from 'fp-ts/lib/Either';
 
@@ -30,17 +31,12 @@ import { App } from 'uWebSockets.js';
 import { isValid } from './hermes.validators';
 
 /**
- * @description Main Request handler of the Hermes.js framework. With injected dependencies, a router function
+ * Main Request handler of the Hermes.js framework. With injected dependencies, a router function
  * and the HttpResponse and HttpRequest objects from uWebSockets, formats all the data from the request and calls the
  * given router function with it. Should allways return an object with status, an optional message for the client and
  * valid value for the response type header.
- * @param deps - Main dependencies for the project. A logger object is required and other things might be included.
- * @param router - A function to handle the expected logic.
- * @param res - uWebSockets HttpResponse object
- * @param req - uWebSockets HttpRequest object
  */
-const requestHandler: RequestHandlerFunction = async (deps, router, res, req) => {
-  const { logger } = deps;
+const requestHandler: RequestHandlerFunction = async (router, res, req) => {
   // In case the response process is aborted or closed this handler is called
   res.onAborted(() => { res.aborted = true; });
 
@@ -68,7 +64,7 @@ const requestHandler: RequestHandlerFunction = async (deps, router, res, req) =>
       new Error(errMessage)));
   }
 
-  logger.debug('Received incoming request:\n' +
+  console.debug('Received incoming request:\n' +
     `Method => ${method};\n` +
     `Route => ${route};\n` +
     `Query Params => ${stringifyKeyValuePair(queryParams)};\n` +
@@ -83,7 +79,7 @@ const requestHandler: RequestHandlerFunction = async (deps, router, res, req) =>
   };
 
   try {
-    const result = await router(deps, reqData);
+    const result = await router(reqData);
     return right(result);
   } catch (error) {
     return left(genHermesError(
@@ -94,30 +90,22 @@ const requestHandler: RequestHandlerFunction = async (deps, router, res, req) =>
 };
 
 /**
- * @description Main Bootstrap function of the Hermes.js framework. Expects a set of dependencies
- * (a logging object is required but it can be Nodejs Console object) and a router function to handle routes and executions.
+ * Main Bootstrap function of the Hermes.js framework. Expects a router function to handle routes and executions.
  * A specific uWebSockets TemplatedApp object and port number might be specified.
- * @param router - A user defined function to handle routes and logic
- * @param [deps] - (Optional) Set of injected dependencies which will be provided to the router.
- * If nothing is provided Node's Console will be used as logger
- * @param [port] - (Optional) Port number to have the server connect at
- * @param [app] - (Optional) uWebSockets TemplatedApp object
  */
-export const hermes: HermesFunction = (router, deps = { logger: console }, port = DEFAULT_PORT, application = App()) => {
-  const { logger } = deps;
+export const hermes: HermesFunction = (router, port = DEFAULT_PORT, application = App()) => {
   application
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     .any('/*', async (res, req) => {
-      const handlerResult = await requestHandler(deps, router, res, req)
+      const handlerResult = await requestHandler(router, res, req)
         .catch((error: Error | HermesError) => {
           const formattedError: HermesError = error instanceof Error ? { error } : error;
           return left(formattedError);
         });
       if (res.aborted === true) {
-        logger.warn('Aborted response, halting execution');
+        console.warn('Aborted response, halting execution');
         return;
       };
-      if (isLeft(handlerResult)) return errorHandler(res, logger, handlerResult.left);
+      if (isLeft(handlerResult)) return errorHandler(res, handlerResult.left);
       const { message = '', status, responseType = 'json' } = handlerResult.right;
       // Write the status to the response
       res.writeStatus(`${status}`);
@@ -130,7 +118,7 @@ export const hermes: HermesFunction = (router, deps = { logger: console }, port 
       res.end(message);
     })
     .listen(port, listenSocket => {
-      if (isValid(listenSocket)) logger.info(`Listening on port ${port}`);
+      if (isValid(listenSocket)) console.info(`Hermes listening on port ${port}`);
       else throw new Error(SERVER_LISTEN_ERROR_MESSAGE);
     });
 };

@@ -8,16 +8,7 @@ import { Either } from 'fp-ts/lib/Either';
 import { Option } from 'fp-ts/lib/Option';
 
 /* -- Main Definitions -- */
-export type ApplicationLogger = Console
-export interface MainDependencies {
-  logger: ApplicationLogger
-}
-export type HermesFunction = (
-  router: RouterFunction,
-  deps?: MainDependencies,
-  port?: number,
-  app?: TemplatedApp
-) => void
+export type HermesFunction = (router: RouterFunction, port?: number, app?: TemplatedApp) => void
 
 export interface RequestBody {
   [key: string]: string | number
@@ -37,7 +28,6 @@ export enum RequestMethods {
 }
 
 export type RequestHandlerFunction = (
-  deps: MainDependencies,
   router: RouterFunction,
   res: HttpResponse,
   req: HttpRequest
@@ -56,7 +46,7 @@ export interface RequestResponse {
   message?: string
   responseType?: 'json' | 'text'
 }
-export type RouterFunction = (deps: MainDependencies, req: RequestData) => Promise<RequestResponse> | RequestResponse
+export type RouterFunction = (req: RequestData) => Promise<RequestResponse> | RequestResponse
 
 /* -- Parsing Functions -- */
 export type QueryParamsParserFunction = (req: HttpRequest) => QueryParams
@@ -76,4 +66,4 @@ export interface HermesError {
 
 export type GenHermesErrorFunction = (status: RecognizedString, message: string, error?: Error) => HermesError
 
-export type ErrorHandlerFunction = (res: HttpResponse, logger: ApplicationLogger, error: HermesError) => void
+export type ErrorHandlerFunction = (res: HttpResponse, error: HermesError) => void
