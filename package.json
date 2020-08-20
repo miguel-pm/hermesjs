@@ -1,6 +1,6 @@
 {
   "name": "@miguel-pm/hermes.js",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Typescript Web Server framework built on top of μWebSockets.js library (https://github.com/uNetworking/uWebSockets.js)",
   "main": "./dist/hermes.js",
   "types": "./dist/hermes.d.ts",
@@ -44,6 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
+    "@babel/plugin-transform-runtime": "^7.11.0",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-typescript": "^7.10.4",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
