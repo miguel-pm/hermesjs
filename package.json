@@ -1,6 +1,6 @@
 {
   "name": "@miguel-pm/hermes.js",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Typescript Web Server framework built on top of μWebSockets.js library (https://github.com/uNetworking/uWebSockets.js)",
   "main": "./dist/hermes.js",
   "types": "./dist/hermes.d.ts",
@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/miguel-pm/hermesjs#readme",
   "dependencies": {
+    "@babel/runtime": "^7.11.2",
     "fp-ts": "^2.8.1",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v17.1.0"
   },
